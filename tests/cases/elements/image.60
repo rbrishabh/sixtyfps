@@ -21,6 +21,8 @@ TestCase := Rectangle {
 ```cpp
 auto handle = TestCase::create();
 const TestCase &instance = *handle;
+instance.show(); // show in order to calculate image size with GL backend
+instance.window.set_scale_factor(1.0);
 
 assert_eq(instance.get_img_width(), 320.);
 assert_eq(instance.get_img_height(), 480.);
@@ -29,6 +31,8 @@ assert_eq(instance.get_img_height(), 480.);
 
 ```rust
 let instance = TestCase::new();
+instance.show(); // show in order to calculate image size with GL backend
+sixtyfps::testing::set_window_scale_factor(&instance, 1.0);
 
 assert_eq!(instance.get_img_width(), 320.);
 assert_eq!(instance.get_img_height(), 480.);
@@ -36,7 +40,8 @@ assert_eq!(instance.get_img_height(), 480.);
 
 ```js
 var instance = new sixtyfps.TestCase();
-
+instance.show(); // show in order to calculate image size with GL backend
+instance.set_scale_factor(1.0);
 
 assert.equal(instance.img_width, 320);
 assert.equal(instance.img_height, 480);

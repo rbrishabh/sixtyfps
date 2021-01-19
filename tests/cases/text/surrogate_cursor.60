@@ -20,6 +20,7 @@ TestCase := TextInput {
 /*
 ```rust
 let instance = TestCase::new();
+instance.show(); // show in order to be able to calculate text metrics for hit testing
 sixtyfps::testing::send_mouse_click(&instance, 50., 50.);
 assert!(instance.get_input_focused());
 assert_eq!(instance.get_test_text(), "");

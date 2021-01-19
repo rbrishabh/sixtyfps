@@ -31,6 +31,7 @@ TestCase := Rectangle {
 /*
 ```rust
 let instance = TestCase::new();
+instance.show(); // show in order to be able to calculate text metrics for hit testing
 assert!(!instance.get_input1_focused());
 assert!(!instance.get_input2_focused());
 
@@ -54,6 +55,7 @@ assert_eq!(instance.get_input2_text(), "Only for field 2");
 ```cpp
 auto handle = TestCase::create();
 const TestCase &instance = *handle;
+instance.show(); // show in order to be able to calculate text metrics for hit testing
 assert(!instance.get_input1_focused());
 assert(!instance.get_input2_focused());
 
@@ -76,6 +78,7 @@ assert_eq(instance.get_input2_text(), "Only for field 2");
 
 ```js
 var instance = new sixtyfps.TestCase();
+instance.show(); // show in order to be able to calculate text metrics for hit testing
 assert(!instance.input1_focused);
 assert(!instance.input2_focused);
 

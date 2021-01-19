@@ -55,6 +55,10 @@ class Component {
     send_keyboard_string_sequence(s: String) {
         this.comp.send_keyboard_string_sequence(s)
     }
+
+    set_scale_factor(f: number) {
+        this.comp.set_scale_factor(f)
+    }
 }
 
 /**

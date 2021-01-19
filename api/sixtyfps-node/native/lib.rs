@@ -511,6 +511,19 @@ declare_types! {
             })?;
             Ok(JsUndefined::new().as_value(&mut cx))
         }
+
+        method set_scale_factor(mut cx) {
+            let factor = cx.argument::<JsNumber>(0)?.value() as f32;
+            let this = cx.this();
+            let lock = cx.lock();
+            let comp = this.borrow(&lock).0.clone();
+            let component = comp.ok_or(()).or_else(|()| cx.throw_error("Invalid type"))?;
+            run_scoped(&mut cx,this.downcast().unwrap(), || {
+                component.window().set_scale_factor(factor);
+                Ok(())
+            })?;
+            Ok(JsUndefined::new().as_value(&mut cx))
+        }
     }
 }
 
