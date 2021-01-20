@@ -65,6 +65,7 @@ fn gen_corelib(include_dir: &Path) -> anyhow::Result<()> {
         "TextHorizontalAlignment",
         "TextVerticalAlignment",
         "ImageFit",
+        "FocusPolicy",
         "Window",
         "TextInput",
         "Clip",

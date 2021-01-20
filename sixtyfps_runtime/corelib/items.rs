@@ -376,6 +376,20 @@ ItemVTable_static! {
     pub static TouchAreaVTable for TouchArea
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, strum_macros::EnumString, strum_macros::Display)]
+#[repr(C)]
+#[allow(non_camel_case_types)]
+pub enum FocusPolicy {
+    manual_focus,
+    click_to_focus,
+}
+
+impl Default for FocusPolicy {
+    fn default() -> Self {
+        Self::manual_focus
+    }
+}
+
 /// A runtime item that exposes key
 #[repr(C)]
 #[derive(FieldOffsets, Default, SixtyFPSElement)]
@@ -388,6 +402,7 @@ pub struct FocusScope {
     pub has_focus: Property<bool>,
     pub key_pressed: Callback<StringArg>,
     pub key_released: Callback<StringArg>,
+    pub focus_policy: Property<FocusPolicy>,
     /// FIXME: remove this
     pub cached_rendering_data: CachedRenderingData,
 }
@@ -416,12 +431,16 @@ impl Item for FocusScope {
         /*if !self.enabled() {
             return InputEventResult::EventIgnored;
         }*/
-        if matches!(event.what, MouseEventType::MousePressed) {
+        if matches!(self.focus_policy(), FocusPolicy::click_to_focus)
+            && matches!(event.what, MouseEventType::MousePressed)
+        {
             if !self.has_focus() {
                 window.set_focus_item(self_rc);
             }
+            InputEventResult::EventAccepted
+        } else {
+            InputEventResult::EventIgnored
         }
-        InputEventResult::EventAccepted
     }
 
     fn key_event(self: Pin<&Self>, event: &KeyEvent, _window: &ComponentWindow) -> KeyEventResult {

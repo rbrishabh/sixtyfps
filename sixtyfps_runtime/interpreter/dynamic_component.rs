@@ -628,6 +628,7 @@ fn generate_component<'id>(
                     property_info::<sixtyfps_corelib::items::TextVerticalAlignment>()
                 }
                 "ImageFit" => property_info::<sixtyfps_corelib::items::ImageFit>(),
+                "FocusPolicy" => property_info::<sixtyfps_corelib::items::FocusPolicy>(),
                 _ => panic!("unkown enum"),
             },
             _ => panic!("bad type"),

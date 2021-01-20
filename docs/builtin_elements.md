@@ -197,6 +197,10 @@ The FocusScope exposes callback to intercept the pressed key when it has focus.
 ### Properties
 
 * **`has_focus`** (*bool*): Set to true when item is focused and receives keyboard events.
+* **`focus_policy`** (*FocusPolicy*): Determine whether/how the `FocusScope` should focus itself. Valid
+  values are:
+   * `manual_focus` (*default*): The `FocusScope` can only receive the focus by manually calling `focus()` on it.
+   * `click_to_focus`: The `FocusScope` will acquire the focus when it receives a mouse click.
 
 ### Methods
 

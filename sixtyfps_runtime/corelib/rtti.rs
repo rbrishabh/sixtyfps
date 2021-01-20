@@ -39,6 +39,7 @@ declare_ValueType![
     crate::items::TextVerticalAlignment,
     crate::model::StandardListViewItem,
     crate::items::ImageFit,
+    crate::items::FocusPolicy,
 ];
 
 /// What kind of animation is on a binding

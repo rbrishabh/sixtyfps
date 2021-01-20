@@ -495,9 +495,18 @@ impl Expression {
             }
         }
 
-        if it.next().is_some() {
-            ctx.diag.push_error(format!("Cannot access id '{}'", first_str), &node);
-            return Expression::Invalid;
+        if let Some(next_identifier) = it.next() {
+            // Qualified enum lookup (NameOfEnum.value)
+            if let Type::Enumeration(enumeration) = ctx.type_register.lookup(first_str.as_str()) {
+                if let Some(value) =
+                    enumeration.try_value_from_string(next_identifier.text().as_str())
+                {
+                    return Expression::EnumerationValue(value);
+                }
+            } else {
+                ctx.diag.push_error(format!("Cannot access id '{}'", first_str), &node);
+                return Expression::Invalid;
+            }
         }
 
         match &ctx.property_type {

@@ -90,6 +90,7 @@ export FocusScope := _ {
     property <length> width;
     property <length> height;
     property <bool> has_focus;
+    property <FocusPolicy> focus_policy;
     callback key_pressed(string);
     callback key_released(string);
     //-default_size_binding:expands_to_parent_geometry
