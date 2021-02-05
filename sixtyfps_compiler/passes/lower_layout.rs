@@ -202,12 +202,18 @@ fn lower_element_layout(
         std::mem::replace(&mut elem.children, new_children)
     };
 
+    let (width_property_name, height_property_name) = if crate::generator::is_flickable(elem) {
+        ("viewport_width", "viewport_height")
+    } else {
+        ("width", "height")
+    };
+
     // lay out within the current element's boundaries.
     let rect_to_layout = LayoutRect {
         x_reference: None,
         y_reference: None,
-        width_reference: Some(NamedReference::new(elem, "width")),
-        height_reference: Some(NamedReference::new(elem, "height")),
+        width_reference: Some(NamedReference::new(elem, width_property_name)),
+        height_reference: Some(NamedReference::new(elem, height_property_name)),
     };
 
     let mut found_layouts = LayoutVec::default();
@@ -316,6 +322,10 @@ fn create_layout_item(
         }
 
         Some(LayoutItem { element: Some(item_element.clone()), layout: None, constraints })
+    } else if crate::generator::is_flickable(item_element) {
+        collected_children.push(item_element.clone());
+        let element = item_element.clone();
+        Some(LayoutItem { element: Some(element), layout: None, constraints })
     } else if let Some(nested_layout_parser) = layout_parse_function(item_element) {
         let layout_rect = LayoutRect::install_on_element(&item_element);
 

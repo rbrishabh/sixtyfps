@@ -147,7 +147,7 @@ pub fn build_array_helper(
 }
 
 pub fn is_flickable(e: &ElementRc) -> bool {
-    matches!(&e.borrow().base_type, crate::langtype::Type::Native(n) if n.class_name == "Flickable")
+    matches!(e.borrow().native_class(), Some(n) if n.class_name == "Flickable")
 }
 
 /// If the element is a Flickable and the property is the property of the viewport, returns the property with the prefix stipped
