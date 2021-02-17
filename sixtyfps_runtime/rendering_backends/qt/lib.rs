@@ -122,9 +122,9 @@ impl sixtyfps_corelib::backend::Backend for Backend {
         };
     }
 
-    fn register_application_font_from_memory(
+    fn register_font_from_memory(
         &'static self,
-        _data: &'static [u8],
+        _data: &[u8],
     ) -> Result<(), Box<dyn std::error::Error>> {
         #[cfg(not(no_qt))]
         {
@@ -133,6 +133,22 @@ impl sixtyfps_corelib::backend::Backend for Backend {
             cpp! {unsafe [data as "QByteArray"] {
                 ensure_initialized();
                 QFontDatabase::addApplicationFontFromData(data);
+            } }
+        };
+        Ok(())
+    }
+
+    fn register_font_from_path(
+        &'static self,
+        _path: &std::path::Path,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        #[cfg(not(no_qt))]
+        {
+            use cpp::cpp;
+            let encoded_path: qttypes::QByteArray = _path.to_string_lossy().as_bytes().into();
+            cpp! {unsafe [encoded_path as "QByteArray"] {
+                ensure_initialized();
+                QFontDatabase::addApplicationFont(QFile::decodeName(encoded_path));
             } }
         };
         Ok(())

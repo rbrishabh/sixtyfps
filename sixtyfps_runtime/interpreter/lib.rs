@@ -213,3 +213,13 @@ pub async fn load(
 pub fn run_event_loop() {
     sixtyfps_rendering_backend_default::backend().run_event_loop();
 }
+
+pub fn register_font_from_path<P: AsRef<std::path::Path>>(
+    path: P,
+) -> Result<(), Box<dyn std::error::Error>> {
+    sixtyfps_rendering_backend_default::backend().register_font_from_path(path.as_ref())
+}
+
+pub fn register_font_from_memory(data: &[u8]) -> Result<(), Box<dyn std::error::Error>> {
+    sixtyfps_rendering_backend_default::backend().register_font_from_memory(data)
+}
