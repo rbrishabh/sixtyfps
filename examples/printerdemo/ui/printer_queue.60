@@ -295,22 +295,43 @@ export PrinterQueue := Rectangle {
     property <[PrinterQueueItem]> printer_queue <=> queue_list.printer_queue;
 
     border-radius: 27px;
-    background: DemoPalette.night_mode ? DemoPalette.printer_action_background_color : #F4F6FF;
+    background: red; //DemoPalette.night_mode ? DemoPalette.printer_action_background_color : #F4F6FF;
 
     VerticalLayout {
-        alignment: start;
         padding: parent.border_radius;
+        //padding-right: parent.border_radius - 11px; // 27-11 = 16px right padding in the design
+        padding-right: 50px;
         spacing: root.border_radius;
 
-        DemoText {
+        t := DemoText {
             text: "Printing-Queue";
             color: DemoPalette.text_foreground_color;
             font-size: DemoPalette.base_font_size * 1.5;
             font-weight: 700;
+            vertical-stretch: 0;
         }
 
         queue_list := NarrowPrinterQueueList {
-            viewport_width: root.width - 2 * root.border_radius;
+            vertical-stretch: 1;
+            viewport_width: width; // No horizontal panning
         }
     }
+
+    Rectangle {
+        x: queue_list.x;
+        y: queue_list.y;
+        width: queue_list.width;
+        height: queue_list.height;
+        background: green;
+    }
+    
+/*
+     Rectangle {
+        x: t.x;
+        y: t.y;
+        width: t.width;
+        height: t.height;
+        background: green;
+    }
+    */
 }
